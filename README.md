@@ -37,3 +37,31 @@ To get the Helm Charts working with a local image you need to
 - Change `repository: backstage\backstage` to be the name of your built image tag, so `repository: backstage` for me
 - Set `guest: null` in the `app-config.yaml` if it's not being overridden by another config... or
 - Args can be used like `args: ["--config", "app-config.yaml", "--config", "app-config.production.yaml"]`
+
+## Set up Argo
+
+https://argo-cd.readthedocs.io/en/stable/getting_started/
+
+```sh
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+
+argocd admin initial-password -n argocd
+argocd login localhost:8080
+
+kubectl config get-contexts -o name
+argocd cluster add docker-desktop
+
+kubectl config set-context --current --namespace=argocd
+argocd app create guestbook --repo https://github.com/argoproj/argocd-example-apps.git --path guestbook --dest-server https://kubernetes.default.svc --dest-namespace default
+argocd app get guestbook
+argocd app sync guestbook
+
+```
+
+```sh   
+argocd app create backstage --repo https://github.com/AnthonyWard/backstage-argo.git --path charts/backstage --dest-server https://kubernetes.default.svc --dest-namespace default
+kubectl port-forward svc/backstage 7007:7007 -n default
+```
