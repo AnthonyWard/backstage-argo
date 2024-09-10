@@ -51,7 +51,7 @@ export default defineConfig({
       process.env.PLAYWRIGHT_URL ??
       (process.env.CI ? 'http://localhost:7007' : 'http://localhost:3000'),
     screenshot: 'only-on-failure',
-    trace: 'on-first-retry',
+    trace: 'on-first-retry'
   },
 
   outputDir: 'node_modules/.cache/e2e-test-results',
