@@ -9,7 +9,7 @@
 #
 # Once the commands have been run, you can build the image using `yarn build-image`
 
-FROM pants1984/backstage-base:latest
+FROM anthonyward/backstage-base:latest
 
 # From here on we use the least-privileged `node` user to run the backend.
 USER node
