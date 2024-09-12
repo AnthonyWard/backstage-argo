@@ -32,4 +32,4 @@ jobs:
   
       - run: docker build . --file packages/backend/Dockerfile --tag anthonyward/backstage-argo:$(date +%s)
   
-      - run: docker push anthonyward/backstage-argo:$(date +%s)
+      - run: docker push docker.io/anthonyward/backstage-argo:$(date +%s)
