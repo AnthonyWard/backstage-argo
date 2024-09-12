@@ -1,0 +1,1 @@
+run `make` in linux or WSL to build and push a docker base image that has the dependencies required for backstage
